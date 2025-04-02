@@ -66,14 +66,14 @@ X_test_transformed = preprocessor.transform(X_test)
 print(f"Transformed Train Shape: {X_train_transformed.shape}")
 print(f"Transformed Test Shape: {X_test_transformed.shape}")
 
-# XGBoost model
+# Train XGBoost classifier
 classifier = XGBClassifier(
     eval_metric='mlogloss',
     random_state=42,
     n_estimators=200,
     early_stopping_rounds=10,
     use_label_encoder=False,
-    scale_pos_weight=(len(y_train) - np.sum(y_train)) / np.sum(y_train),  # Class Imbalance
+    scale_pos_weight=(len(y_train) - np.sum(y_train)) / np.sum(y_train),  # Xgboost Class Imbalance
     max_depth=5, # Regularization
     subsample=0.8, # Regularization
     colsample_bytree=0.8 # Regularization
