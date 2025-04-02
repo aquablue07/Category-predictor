@@ -33,7 +33,7 @@ X = df.drop('Category', axis=1)
 y = df['Category']
 
 # Split data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle=True) #added shuffle=True, but it is default.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle=True)
 
 # Preprocessing Pipeline
 preprocessor = ColumnTransformer(
