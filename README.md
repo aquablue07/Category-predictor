@@ -9,5 +9,4 @@
 
  -- while predicting use the preprocessed csv(not the json)
 
- -- when using catboost, make sure to get the data from the random forest training module
 
