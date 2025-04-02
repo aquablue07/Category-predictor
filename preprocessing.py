@@ -6,19 +6,16 @@ import matplotlib.pyplot as plt
 
 
 def load_json(file_path):
-    """Load JSON data from a given file path."""
     with open(file_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
 
 def save_to_csv(df, filename):
-    """Save a DataFrame to a CSV file."""
     df.to_csv(filename, index=False)
     print(f"Saved: {filename}")
 
 
 # Check skewness 
-
 def analyze_price_distribution(df):
     print("Price Skewness:", df['Price'].skew())
 
@@ -31,8 +28,7 @@ def analyze_price_distribution(df):
 
 # Preprocessing
 
-def preprocess_with_spacy(text, nlp):
-    """Perform text preprocessing using spaCy."""
+def preprocess_regex(text, nlp):
     if not isinstance(text, str) or not text.strip():
         return ""
 
@@ -45,20 +41,18 @@ def preprocess_with_spacy(text, nlp):
 
 
 def process_text_columns(df, nlp):
-    """Combine text fields and apply spaCy preprocessing."""
     df["Combined_Text"] = (
         df["Title"] + " " +
         df["Description"].apply(lambda x: " ".join(x)) + " " +
         df["Features"].apply(lambda x: " ".join(x))
     )
-    df["Processed_Text"] = df["Combined_Text"].apply(lambda x: preprocess_with_spacy(x, nlp))
+    df["Processed_Text"] = df["Combined_Text"].apply(lambda x: preprocess_regex(x, nlp))
     return df.drop(columns=["Title", "Description", "Features", "Combined_Text"])
 
 
 # Calculate volume from details.dimensions
 
 def calculate_volume(dim_str):
-    """Calculate volume from extracted dimensions."""
     if pd.isna(dim_str) or not str(dim_str).strip():
         return None
 
@@ -82,7 +76,6 @@ def extract_dimensions(df):
 # calculate and standardize weights
 
 def convert_to_lbs(value, unit):
-    """Convert different weight units to pounds (lbs)."""
     conversion_factors = {
         "kg": 2.20462, "kilogram": 2.20462,
         "oz": 0.0625, "ounce": 0.0625,
@@ -92,7 +85,6 @@ def convert_to_lbs(value, unit):
 
 
 def extract_weight(details):
-    """Extract weight from product details dictionary."""
     if not isinstance(details, dict):
         return None
 
@@ -112,9 +104,8 @@ def extract_weight(details):
 
     return None
 
-
-def process_weights(data):
-    """Extract weight data from product details."""
+#Extract weight data from product details.
+def process_weights(data):    
     return pd.DataFrame([
         {"SKU": item.get("SKU", "No SKU"), "Weight_lbs": extract_weight(item.get("Details", {}))}
         for item in data
@@ -123,17 +114,16 @@ def process_weights(data):
 
 
 def main():
-    """Main function to execute data processing pipeline."""
     
     # Load data
     json_path = "/Users/vishwa/Desktop/products_labeled.json"
     data = load_json(json_path)
     df = pd.json_normalize(data).fillna('')  # Normalize and handle missing values
 
-    # Analyze price distribution
-    analyze_price_distribution(df)
+    
+    analyze_price_distribution(df) #skewness
 
-    # Load spaCy model (Missing line added here)
+    # Load spaCy model
     nlp = spacy.load("en_core_web_md", disable=["parser", "ner"])  
 
     # Process text data
