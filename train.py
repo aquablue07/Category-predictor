@@ -1,3 +1,4 @@
+# Classification layer on top of SpaCy
 import spacy  
 from spacy.tokens import Doc  
 from spacy.training import Example 
