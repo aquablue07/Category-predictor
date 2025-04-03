@@ -10,5 +10,7 @@
 
  -- while predicting use the preprocessed csv(not the json)
 
+ -- train.py is the best model currently. can also try xgboost_tfidf or rf_tfidf, if a quicker model is needed. but will have relatively low accuracy
+
 
 
