@@ -15,7 +15,7 @@ def load_data(filepath, sample_frac=1.0):
  
     df = pd.read_csv(filepath) 
     if sample_frac < 1.0:
-        df = df.sample(frac=sample_frac, random_state=42)  # Randomly select rows
+        df = df.sample(frac=sample_frac, random_state=7)  # Randomly select rows
     return df
 
 def prepare_data(df):
