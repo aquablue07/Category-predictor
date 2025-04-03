@@ -104,7 +104,7 @@ def save_components(nlp, label_encoder, scaler, output_dir="model"): #Saves the 
 
 def main(data_path="Downloads/final_spacy.csv"):
    
-    df = load_data(data_path, sample_frac=0.8)  
+    df = load_data(data_path, sample_frac=0.8)       # loading  a subset of total data due to memory constrainsts. change it back to 1
     df, label_encoder, scaler = prepare_data(df)  
     train_df, val_df = train_test_split(df, test_size=0.2, random_state=7) 
     nlp = initialize_spacy(label_encoder.classes_)  # Initialize the spaCy model
