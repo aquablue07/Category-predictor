@@ -52,7 +52,7 @@ preprocessor = ColumnTransformer(
 # Model Pipeline
 model = Pipeline([
     ('preprocessor', preprocessor),
-    ('classifier', RandomForestClassifier(random_state=7, n_estimators=400, class_weight='balanced',  # 100-200 is the sweet spot
+    ('classifier', RandomForestClassifier(random_state=7, n_estimators=400, class_weight='balanced',  # change max_depth to 50 for better results
                                            max_depth=10, min_samples_split=2, min_samples_leaf=2)) #added regularization
 ])
 
