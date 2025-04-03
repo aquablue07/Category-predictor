@@ -13,7 +13,7 @@ def load_components(model_dir="model")
     
     return nlp, label_encoder, scaler
 
-def prepare_unlabeled_data(df, scaler): # same as in training
+def prepare_unlabeled_data(df, scaler): # Same as in training
   
     if 'Processed_Text' not in df.columns:
         if 'text' in df.columns:
@@ -21,7 +21,7 @@ def prepare_unlabeled_data(df, scaler): # same as in training
         else:
             raise ValueError("No text column found")
     
-    df['Processed_Text'] = df['Processed_Text'].astype(str).str.strip()
+    df['Processed_Text'] = df['Processed_Text'].astype(str).str.strip()   #some float values are hidden in some text rows
     
     if 'Manufacturer' in df.columns:
         df['Manufacturer'] = df['Manufacturer'].astype(str).str.strip().fillna('unknown')
@@ -85,5 +85,5 @@ def main(unlabeled_path="Downloads/final_spacyunlabeled.csv"):
 
 if __name__ == "__main__":
     predictions = main()
-    print("\nSample predictions:")
-    print(predictions.head())
+    #print("\nSample predictions:")   #Enable if using jupyter or if you need osme sample preds
+    #print(predictions.head())
