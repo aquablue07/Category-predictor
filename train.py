@@ -20,7 +20,7 @@ def load_data(filepath, sample_frac=1.0):
 
 def prepare_data(df):
     
-    df['Processed_Text'] = df['Processed_Text'].astype(str).str.strip() 
+    df['Processed_Text'] = df['Processed_Text'].astype(str).str.strip()   # some text data has float in some rows. standardize to str
     df['Manufacturer'] = df['Manufacturer'].astype(str).str.strip().fillna('unknown') 
 
     le = LabelEncoder()  
