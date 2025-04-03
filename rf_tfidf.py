@@ -66,10 +66,10 @@ print(f"Training Accuracy: {train_accuracy:.4f}")
 print(f"Validation Accuracy: {val_accuracy:.4f}")
 
 # Cross-validation
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
+kf = KFold(n_splits=5, shuffle=False, random_state=7)
 cv_scores = cross_val_score(model, X, y, cv=kf)
 print(f"Cross-Validation Scores: {cv_scores}")
-print(f"Mean CV Accuracy: {cv_scores.mean():.4f}")
+print(f"Mean CV Accuracy: {cv_scores.mean():.2f}")
 
 # Evaluate
 y_pred = model.predict(X_test)
