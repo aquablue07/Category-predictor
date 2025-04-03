@@ -81,8 +81,8 @@ def train_model(nlp, train_df, val_df, label_encoder, n_iter=10, batch_size=8): 
 
     return spacy.load(best_model_path), history 
 
-def calculate_accuracy(nlp, df):    #Calculates the accuracy of the model on a DataFrame
-    
+def calculate_accuracy(nlp, df):  
+
     correct = 0 
     for _, row in df.iterrows():
         doc = nlp(row['Processed_Text'])  
