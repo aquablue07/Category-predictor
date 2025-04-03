@@ -18,8 +18,7 @@ def save_to_csv(df, filename):
 # Check skewness 
 def analyze_price_distribution(df):
     print("Price Skewness:", df['Price'].skew())
-
-    plt.hist(df['Price'], bins=100)
+    plt.hist(df['Price'], bins=100)     # play around with the bin size
     plt.xlabel("Price")
     plt.ylabel("Frequency")
     plt.title("Price Distribution")
@@ -57,11 +56,10 @@ def calculate_volume(dim_str):
         return None
 
     numbers = list(map(float, re.findall(r'[\d\.]+', dim_str)))
-    return round(numbers[0] * numbers[1] * numbers[2], 2) if len(numbers) >= 3 else None
+    return round(numbers[0] * numbers[1] * numbers[2], 2) if len(numbers) >= 3 else None   # Needs to have all 3(L,H,W)
 
 
-def extract_dimensions(df):
-    """Extract and calculate volume from dimension-related columns."""
+def extract_dimensions(df):    # extract L, H, W
     columns_to_concat = [
         'Details.Product Dimensions', 'Details.Package Dimensions',
         'Details.Item Dimensions LxWxH', 'Details.Item Package Dimensions L x W x H',
@@ -89,7 +87,7 @@ def extract_weight(details):
         return None
 
     weight_pattern = re.compile(r'weight|mass|wt|wgt', re.IGNORECASE)
-    exclude_pattern = re.compile(r'maximum|limit|min|recommended|capacity', re.IGNORECASE)
+    exclude_pattern = re.compile(r'maximum|limit|min|recommended|capacity', re.IGNORECASE)  # ignore anything beyond product weight, item weight, package weight etc
 
     for key, value in details.items():
         if exclude_pattern.search(str(key)) or not weight_pattern.search(str(key)):
@@ -104,13 +102,11 @@ def extract_weight(details):
 
     return None
 
-#Extract weight data from product details.
 def process_weights(data):    
     return pd.DataFrame([
         {"SKU": item.get("SKU", "No SKU"), "Weight_lbs": extract_weight(item.get("Details", {}))}
         for item in data
     ])
-
 
 
 def main():
