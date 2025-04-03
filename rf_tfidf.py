@@ -26,7 +26,7 @@ df[text_col] = df[text_col].fillna('')
 df = df.dropna(subset=['Category'])
 
 # Shuffle the DataFrame before splitting
-df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+df = df.sample(frac=1, random_state=42).reset_index(drop=True).  #shuffle data
 
 # Separate features and target
 X = df.drop('Category', axis=1)
@@ -52,7 +52,7 @@ preprocessor = ColumnTransformer(
 # Model Pipeline
 model = Pipeline([
     ('preprocessor', preprocessor),
-    ('classifier', RandomForestClassifier(random_state=7, n_estimators=400, class_weight='balanced',
+    ('classifier', RandomForestClassifier(random_state=7, n_estimators=400, class_weight='balanced',  # 100-200 is the sweet spot
                                            max_depth=10, min_samples_split=2, min_samples_leaf=2)) #added regularization
 ])
 
@@ -62,11 +62,11 @@ model.fit(X_train, y_train)
 train_accuracy = model.score(X_train, y_train)
 val_accuracy = model.score(X_test, y_test)
 
-print(f"Training Accuracy: {train_accuracy:.4f}")
-print(f"Validation Accuracy: {val_accuracy:.4f}")
+print(f"Training Accuracy: {train_accuracy:.2f}")
+print(f"Validation Accuracy: {val_accuracy:.2f}")
 
 # Cross-validation
-kf = KFold(n_splits=5, shuffle=False, random_state=7)
+kf = KFold(n_splits=5, shuffle=True, random_state=7)
 cv_scores = cross_val_score(model, X, y, cv=kf)
 print(f"Cross-Validation Scores: {cv_scores}")
 print(f"Mean CV Accuracy: {cv_scores.mean():.2f}")
