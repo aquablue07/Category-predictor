@@ -19,7 +19,7 @@ categorical_cols = ['Manufacturer']
 text_col = 'Processed_Text'
 target_col = 'Category'
 
-# Ensure numerical columns are numeric
+# Ensure numerical columns are numeric.
 df[numerical_cols] = df[numerical_cols].apply(pd.to_numeric, errors='coerce')
 
 # Handle missing values
@@ -79,7 +79,7 @@ classifier = XGBClassifier(
     colsample_bytree=0.8 # Regularization
 )
 
-# Train with early stopping
+# Train with early stopping, NTS: early stopping did not work
 classifier.fit(
     X_train_transformed, y_train,
     eval_set=[(X_test_transformed, y_test)],
@@ -100,11 +100,11 @@ print("\n=== Metrics ===")
 print(f"Balanced Accuracy: {balanced_accuracy_score(y_test, y_pred):.4f}")
 print("\nClassification Report:")
 print(classification_report(y_test_labels, y_pred_labels))
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test_labels, y_pred_labels))
+#print("\nConfusion Matrix:")
+# print(confusion_matrix(y_test_labels, y_pred_labels))
 
-# Cross-validation
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-cv_scores = cross_val_score(classifier, X_train_transformed, y_train, cv=cv, scoring='balanced_accuracy')
-print(f"\nCross-Validation Scores: {cv_scores}")
-print(f"Mean CV Balanced Accuracy: {cv_scores.mean():.4f}")
+# # Cross-validation
+# cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+# cv_scores = cross_val_score(classifier, X_train_transformed, y_train, cv=cv, scoring='balanced_accuracy')
+# print(f"\nCross-Validation Scores: {cv_scores}")
+# print(f"Mean CV Balanced Accuracy: {cv_scores.mean():.4f}")
